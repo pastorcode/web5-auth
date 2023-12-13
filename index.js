@@ -20,6 +20,9 @@ async function hi() {
 
 }
 
+let newUserDid = 'did:ion:7f6a8b1e3c4d5e9f2a1b3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f8a7b1e3c4d5e6f';
+
+
 app.get('/', (req, res) => {
     res.send('Hello World')
 })
@@ -28,8 +31,6 @@ app.post('/create', async (req, res) => {
     try{
         console.log('Connecting...');
         // const { web5, did: newUserDid } = await Web5.connect();
-        let newUserDid = 'did:ion:awholelotofothergibberish'
-        console.log(newUserDid)
          res.status(200).send({
             status: 'success',
             message: 'User DID created successfully',
@@ -48,18 +49,19 @@ app.post('/create', async (req, res) => {
 app.post('/authenticate', async (req, res) => {
     const { userDid } = req.body
     try{
-        const { web5 } = await Web5.connect();
+        // const { web5 } = await Web5.connect();
+        //
+        // const did = await web5.did.resolve(userDid);
 
-        const did = await web5.did.resolve(userDid);
-        if(did.didResolutionMetadata.error != null){
-            throw new Error(did.didResolutionMetadata.error)
+        if(!userDid || userDid != newUserDid){
+            throw new Error('Invalid DID')
         }
 
         res.status(200).send({
             status: 'success',
             message: 'Authentication Success!!!',
             data: {
-                did: did.didDocument.id
+                did: userDid
             }
         })
     }catch(e){
