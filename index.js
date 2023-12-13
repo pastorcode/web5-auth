@@ -8,7 +8,7 @@ if (!globalThis.crypto) globalThis.crypto = webcrypto;
 const app = express()
 const PORT = process.env.PORT || 3500
 app.use(express.json())
-app.use(cors({ origin: '*'}));
+app.use(cors());
 
 
 async function hi() {
