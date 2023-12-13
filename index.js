@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
 
 app.post('/create', async (req, res) => {
     try{
+        console.log('Connecting...');
         const { web5, did: newUserDid } = await Web5.connect();
         res.status(200).send({
             status: 'success',
